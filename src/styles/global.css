@@ -41,3 +41,4 @@ h1 { font-size: clamp(2.3rem, 5vw, 4.5rem); margin: 0 0 1rem; }
 .docs-shell article :not(pre) > code { background: var(--panel); border-radius: .25rem; padding: .1rem .3rem; }
 .docs-shell article img { max-width: 100%; height: auto; }
 @media (max-width: 760px) { .site-header .tagline { display: none; } main { padding: 2rem 0; } .docs-shell { display: block; } .docs-shell aside { border: 0; border-bottom: 1px solid var(--line); padding: 0 0 1rem; margin-bottom: 2rem; } }
+@media (max-width: 380px) { nav { min-height: 0; flex-wrap: wrap; gap: .75rem; padding: .75rem 0; } .theme-toggle { margin-left: auto; } .nav-links { flex-basis: 100%; margin-left: 0; order: 3; } }
