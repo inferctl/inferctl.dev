@@ -1,0 +1,26 @@
+---
+// Client-side theme selection. Light remains the default until the user chooses.
+---
+<button id="theme-toggle" class="theme-toggle" aria-label="Use dark theme" type="button">
+  <span class="theme-icon" aria-hidden="true">☾</span>
+</button>
+
+<script is:inline>
+  (() => {
+    const button = document.getElementById('theme-toggle');
+    const icon = button?.querySelector('.theme-icon');
+    const current = () => document.documentElement.getAttribute('data-theme') || 'light';
+    const render = () => {
+      const dark = current() === 'dark';
+      if (icon) icon.textContent = dark ? '☀' : '☾';
+      button?.setAttribute('aria-label', dark ? 'Use light theme' : 'Use dark theme');
+    };
+    button?.addEventListener('click', () => {
+      const next = current() === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('inferctl-theme', next);
+      render();
+    });
+    render();
+  })();
+</script>
