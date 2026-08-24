@@ -27,7 +27,7 @@ body.home-page { font: 17px/1.65 Inter, ui-sans-serif, system-ui, sans-serif; }
 body.home-page nav { min-height: 3.75rem; }
 body.home-page .brand { font: 700 20px/1.65 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: -.02em; }
 body.home-page .wordmark { font-weight: 700; }
-body.home-page .wordmark .check { color: var(--accent); display: inline-block; margin-right: .1em; }
+body.home-page .wordmark-mark { display: inline-block; height: .58em; margin-right: .14em; vertical-align: -.04em; width: .58em; }
 body.home-page .hero { padding: 1.5rem 0 4rem; }
 body.home-page .hero .tagline { font-size: 20px; font-weight: 400; line-height: 1.65; margin: 0 0 20px; }
 body.home-page .hero > p:not(.tagline):not(.actions) { font-size: 20px; line-height: 1.65; }
