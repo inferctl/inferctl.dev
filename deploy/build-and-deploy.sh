@@ -25,8 +25,8 @@ npm ci --no-audit --no-fund
 log 'building static site'
 npm run build
 log "mirroring dist/ to $DOCROOT"
-# Keep the root-owned /inferctl/ Go vanity-import endpoint. It links to this
-# site's homepage but is not a file produced by Astro, so it cannot be owned by
-# the deployment user or deleted by the static-site mirror.
+# Keep the root-owned legacy /inferctl/ endpoint. It links to this site's
+# homepage but is not a file produced by Astro, so it cannot be owned by the
+# deployment user or deleted by the static-site mirror.
 rsync -a --delete --filter='P /inferctl/***' dist/ "$DOCROOT/"
 log "published $(find dist -type f | wc -l | tr -d ' ') files"
