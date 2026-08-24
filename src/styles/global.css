@@ -6,13 +6,16 @@ a { color: var(--accent); }
 .site-header { border-bottom: 1px solid var(--line); }
 nav, main, footer { width: min(1100px, calc(100% - 2rem)); margin: auto; }
 nav { min-height: 4.25rem; display: flex; align-items: center; gap: 1rem; }
-.brand { color: var(--text); font-weight: 800; font-size: 1.2rem; text-decoration: none; }
+.brand { color: var(--text); font: 800 1.2rem ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: -.03em; text-decoration: none; }
+.brand .ctl, .wordmark .ctl { color: var(--accent); }
 .tagline, footer { color: var(--muted); }
 .nav-links { margin-left: auto; display: flex; gap: 1rem; }
 main { padding: 4rem 0; }
 footer { border-top: 1px solid var(--line); padding: 1.5rem 0 2.5rem; display: flex; gap: 1rem; }
 h1, h2, h3 { line-height: 1.2; }
 h1 { font-size: clamp(2.3rem, 5vw, 4.5rem); margin: 0 0 1rem; }
+.wordmark { color: var(--text); font: 800 clamp(2.6rem, 9vw, 4.5rem)/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: -.03em; margin: 0 0 .5rem; }
+.tagline { color: var(--accent); font: 500 clamp(1rem, 3vw, 1.25rem)/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; margin: 0 0 1.25rem; }
 .hero { max-width: 48rem; padding: 4rem 0; }
 .hero p { font-size: 1.2rem; color: var(--muted); }
 .eyebrow { color: var(--accent); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
