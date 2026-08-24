@@ -1,0 +1,45 @@
+# inferctl.dev static Astro site. The apex host is canonical.
+server {
+    listen 80;
+    listen [::]:80;
+    server_name inferctl.dev www.inferctl.dev;
+    return 301 https://inferctl.dev$request_uri;
+}
+
+# This block requires a certificate that also covers www.inferctl.dev.
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name www.inferctl.dev;
+
+    ssl_certificate     /etc/letsencrypt/live/inferctl.dev/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/inferctl.dev/privkey.pem;
+    return 301 https://inferctl.dev$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name inferctl.dev;
+
+    ssl_certificate     /etc/letsencrypt/live/inferctl.dev/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/inferctl.dev/privkey.pem;
+
+    root /var/www/inferctl.dev;
+    index index.html;
+    access_log /var/log/nginx/inferctl.dev-access.log;
+    error_log  /var/log/nginx/inferctl.dev-error.log;
+
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+
+    location / { try_files $uri $uri/ =404; }
+    error_page 404 /404.html;
+
+    location /_astro/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    location ~ /\. { deny all; }
+}

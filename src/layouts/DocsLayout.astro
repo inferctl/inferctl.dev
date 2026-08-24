@@ -1,0 +1,34 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { getDocsByBucket } from '../lib/docs';
+
+interface Props {
+  title: string;
+  description: string;
+  slug: string;
+}
+
+const { title, description, slug } = Astro.props;
+const buckets = await getDocsByBucket();
+---
+<BaseLayout title={`${title} — inferctl`} description={description}>
+  <div class="docs-shell">
+    <aside aria-label="Documentation navigation">
+      <a class:list={["docs-home", { active: slug === '' }]} href="/docs/">Documentation</a>
+      {buckets.map((bucket) => (
+        <section>
+          <h2>{bucket.label}</h2>
+          <ul>
+            {bucket.docs.map((doc) => (
+              <li><a class:list={{ active: doc.id === slug }} href={`/docs/${doc.id}/`}>{doc.data.title}</a></li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </aside>
+    <article>
+      <h1>{title}</h1>
+      <slot />
+    </article>
+  </div>
+</BaseLayout>

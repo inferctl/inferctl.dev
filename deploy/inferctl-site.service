@@ -1,0 +1,15 @@
+[Unit]
+Description=Build and deploy inferctl.dev
+Documentation=https://inferctl.dev
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=deploy
+Group=deploy
+WorkingDirectory=/srv/inferctl-site
+EnvironmentFile=-/etc/inferctl-site.env
+ExecStart=/srv/inferctl-site/deploy/build-and-deploy.sh
+TimeoutStartSec=600
+Nice=10

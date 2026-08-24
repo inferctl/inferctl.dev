@@ -1,0 +1,11 @@
+[Unit]
+Description=Nightly rebuild and deploy of inferctl.dev
+Documentation=https://inferctl.dev
+
+[Timer]
+OnCalendar=*-*-* 09:00:00 UTC
+Persistent=true
+RandomizedDelaySec=600
+
+[Install]
+WantedBy=timers.target

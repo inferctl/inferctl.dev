@@ -1,0 +1,21 @@
+---
+import { render } from 'astro:content';
+import { marked } from 'marked';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { fetchChangelog } from '../../lib/changelog';
+import { getDocs } from '../../lib/docs';
+
+export async function getStaticPaths() {
+  const docs = await getDocs();
+  return docs.map((doc) => ({ params: { slug: doc.id }, props: { doc } }));
+}
+
+const { doc } = Astro.props;
+const { Content } = await render(doc);
+const changelogHtml = doc.id === 'changelog'
+  ? await fetchChangelog().then(async (markdown) => markdown ? await marked.parse(markdown) : null)
+  : null;
+---
+<DocsLayout title={doc.data.title} description={doc.data.description} slug={doc.id}>
+  {changelogHtml ? <Fragment set:html={changelogHtml} /> : <Content />}
+</DocsLayout>

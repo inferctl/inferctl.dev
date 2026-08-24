@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getDocsByBucket } from '../../lib/docs';
+
+const buckets = await getDocsByBucket();
+---
+<BaseLayout title="Documentation — inferctl" description="Guides, concepts, examples, and project documentation for inferctl.">
+  <section class="docs-index">
+    <p class="eyebrow">Documentation</p>
+    <h1>Understand your local inference stack.</h1>
+    <p>Start with installation, then inspect the command reference and agent workflow guides.</p>
+    <div class="bucket-grid">
+      {buckets.map((bucket) => (
+        <section class="bucket-card">
+          <h2>{bucket.label}</h2>
+          <p>{bucket.description}</p>
+          <ul>
+            {bucket.docs.map((doc) => <li><a href={`/docs/${doc.id}/`}>{doc.data.title}</a></li>)}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
