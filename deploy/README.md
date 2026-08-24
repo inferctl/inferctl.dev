@@ -2,7 +2,8 @@
 
 The site rebuilds each night on waazh. It fetches its own `origin/main`, runs
 `npm ci` and `npm run build`, then mirrors `dist/` to `/var/www/inferctl.dev`.
-The build fetches documentation from `inferctl/inferctl@main`.
+The build fetches documentation from `inferctl/inferctl@main`. The mirror keeps
+the root-owned `/inferctl/` Go vanity-import endpoint in place.
 
 ## One-time install
 
