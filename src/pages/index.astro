@@ -9,4 +9,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <p>inferctl inspects local inference backends, loaded models, and routing decisions. It stays outside your inference request path.</p>
     <p class="actions"><a class="button" href="/docs/">Read the docs</a> <a href="https://github.com/inferctl/inferctl">View source</a></p>
   </section>
+  <section class="feature-section" aria-label="Why inferctl">
+    <div class="feature-grid">
+      <article class="feature-card">
+        <h2>Routes are explained</h2>
+        <p>See the selected backend and model, plus the route rules and fallbacks that made the choice.</p>
+      </article>
+      <article class="feature-card">
+        <h2>Inspect, do not infer</h2>
+        <p>Check health, models, and routes without sending a prompt or loading a model.</p>
+      </article>
+      <article class="feature-card">
+        <h2>Control plane, not proxy</h2>
+        <p>inferctl makes the decision. Your client connects directly to the selected inference backend.</p>
+      </article>
+      <article class="feature-card">
+        <h2>Built for agents</h2>
+        <p>Use stable JSON envelopes, explicit errors, and capability data in reliable automation.</p>
+      </article>
+      <article class="feature-card feature-card--toolchain">
+        <div>
+          <h2>Composes with the toolchain</h2>
+          <p>Ask inferctl to check readiness and select a route before work begins. Pass its JSON result to your client or agent. Use evalctl to evaluate the result and spoolctl to run longer work safely. inferctl stays outside the inference request path.</p>
+        </div>
+        <a class="feature-cta" href="/docs/agent-guide/#product-owned-readiness-recipes">Start with <code>inferctl preflight</code> <span aria-hidden="true">→</span></a>
+      </article>
+    </div>
+  </section>
 </BaseLayout>
