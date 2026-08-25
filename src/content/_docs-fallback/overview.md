@@ -92,7 +92,7 @@ examples/demo-3-agent-loop.sh
 examples/demo-4-agent-preflight-report.sh
 ```
 
-See the terminal demo GIF in [docs/img/inferctl-demo.gif](docs/img/inferctl-demo.gif).
+See the terminal demo GIF in [docs/img/inferctl-demo.gif](https://github.com/inferctl/inferctl/blob/main/docs/img/inferctl-demo.gif).
 
 The fixture helper intentionally keeps the internal legacy name
 `cmd/infer-testserver`. The product rename applies to the user-facing CLI
@@ -195,7 +195,7 @@ v0.2.2.
 
 ## License
 
-Apache License 2.0. See [LICENSE](LICENSE).
+Apache License 2.0. See [LICENSE](https://github.com/inferctl/inferctl/blob/main/LICENSE).
 
 The inference-router idea that kicked off inferctl came out of tinkering with
 [Foxforge](https://github.com/GuideboardLabs/foxforge). inferctl itself is an

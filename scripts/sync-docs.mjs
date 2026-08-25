@@ -11,11 +11,12 @@ import {
   mkdirSync,
   mkdtempSync,
   readFileSync,
+  realpathSync,
   rmSync,
   writeFileSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { dirname, join, posix } from 'node:path';
+import { dirname, join, posix, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const repo = process.env.INFERCTL_DOCS_REPO ?? 'inferctl/inferctl';
@@ -101,26 +102,44 @@ function frontmatter(page) {
   ].join('\n');
 }
 
-function rewriteLinks(markdown, page) {
-  return markdown.replace(/\]\(([^)\s]+\.md)(#[^)\s]+)?\)/g, (full, target, anchor = '') => {
-    if (/^[a-z]+:/i.test(target)) return full;
-    const source = posix.normalize(posix.join(posix.dirname(page.source), target));
-    const id = bySource.get(source) ?? bySource.get(source.replace(/^docs\//, ''));
-    return id
-      ? `](/docs/${id}/${anchor})`
-      : `](https://github.com/${repo}/blob/${ref}/${source}${anchor})`;
+function rewriteLinks(markdown, source, pageIdsBySource) {
+  return markdown.replace(/(!?)\]\(([^)\s#]+)(#[^)\s]+)?\)/g, (full, image, target, anchor = '') => {
+    if (target.startsWith('/') || /^[a-z]+:/i.test(target)) return full;
+
+    const targetPath = posix.normalize(posix.join(posix.dirname(source), target));
+    const docsPath = targetPath.startsWith(`${docsSubdir}/`)
+      ? targetPath.slice(docsSubdir.length + 1)
+      : `../${targetPath}`;
+    const id = target.endsWith('.md')
+      ? pageIdsBySource.get(targetPath) ?? bySource.get(docsPath)
+      : undefined;
+    if (id) return `${image}](/docs/${id}/${anchor})`;
+
+    const baseUrl = image
+      ? `https://raw.githubusercontent.com/${repo}/${ref}/${targetPath}`
+      : `https://github.com/${repo}/blob/${ref}/${targetPath}`;
+    return `${image}](${baseUrl}${anchor})`;
   });
 }
 
 function writePages(repoRoot) {
   const sourceDocs = join(repoRoot, docsSubdir);
   if (!existsSync(sourceDocs)) throw new Error(`missing ${docsSubdir}/ in selected source`);
+  const pageIdsBySource = new Map();
+  for (const page of pages) {
+    const sourcePath = page.source.startsWith('../')
+      ? join(repoRoot, page.source.slice(3))
+      : join(sourceDocs, page.source);
+    if (!existsSync(sourcePath)) throw new Error(`missing allowlisted source ${page.source}`);
+    pageIdsBySource.set(relative(realpathSync(repoRoot), realpathSync(sourcePath)).replaceAll('\\', '/'), page.id);
+  }
   for (const page of pages) {
     const sourcePath = page.source.startsWith('../')
       ? join(repoRoot, page.source.slice(3))
       : join(sourceDocs, page.source);
     if (!existsSync(sourcePath)) throw new Error(`missing allowlisted source ${page.source}`);
     const markdown = readFileSync(sourcePath, 'utf8');
+    const source = relative(realpathSync(repoRoot), realpathSync(sourcePath)).replaceAll('\\', '/');
     // Direct docs must declare their own typed metadata. Symlink pages retain
     // the manifest metadata because their targets are code artifacts outside
     // docs/ (README, release guides, and runnable examples).
@@ -134,7 +153,7 @@ function writePages(repoRoot) {
     }
     const output = join(buildDir, `${page.id}.md`);
     mkdirSync(dirname(output), { recursive: true });
-    writeFileSync(output, frontmatter(page) + rewriteLinks(stripFrontmatter(markdown), page));
+    writeFileSync(output, frontmatter(page) + rewriteLinks(stripFrontmatter(markdown), source, pageIdsBySource));
   }
 }
 

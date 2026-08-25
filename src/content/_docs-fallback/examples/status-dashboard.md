@@ -27,5 +27,5 @@ The harness:
 The dashboard is a human renderer over the public status feed. Automation should
 consume `status --json --watch --events`, not scrape the dashboard.
 
-See [demo-transcript.txt](demo-transcript.txt) for the terminal sequence this
+See [demo-transcript.txt](https://github.com/inferctl/inferctl/blob/main/examples/status-dashboard/demo-transcript.txt) for the terminal sequence this
 scenario is meant to capture.
