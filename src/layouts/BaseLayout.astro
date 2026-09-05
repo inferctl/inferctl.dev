@@ -9,6 +9,26 @@ interface Props {
 }
 
 const { title, description, bodyClass = '' } = Astro.props;
+
+// Emit Organization structured data once, on the homepage. inferctl is its own
+// entity (own GitHub org) and one product in the Ozhiaki house of brands; the
+// parentOrganization link (reciprocated by subOrganization on ozhiaki.com)
+// fuses the separate domains into one entity graph for search.
+const isHome = Astro.url.pathname === '/';
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'inferctl',
+  url: 'https://inferctl.dev/',
+  logo: new URL('/favicon.svg', 'https://inferctl.dev').href,
+  description: 'Explain your local LLM stack.',
+  sameAs: ['https://github.com/inferctl'],
+  parentOrganization: {
+    '@type': 'Organization',
+    name: 'Ozhiaki Labs',
+    url: 'https://ozhiaki.com',
+  },
+};
 ---
 <!doctype html>
 <html lang="en" data-theme="light">
@@ -19,6 +39,9 @@ const { title, description, bodyClass = '' } = Astro.props;
     <link rel="icon" href="/favicon.svg" />
     <link rel="canonical" href={new URL(Astro.url.pathname, 'https://inferctl.dev')} />
     <title>{title}</title>
+    {isHome && (
+      <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+    )}
     <script is:inline>
       (() => {
         const stored = localStorage.getItem('inferctl-theme');
