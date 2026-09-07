@@ -18,15 +18,17 @@ const isHome = Astro.url.pathname === '/';
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': 'https://inferctl.dev/#organization',
   name: 'inferctl',
   url: 'https://inferctl.dev/',
   logo: new URL('/favicon.svg', 'https://inferctl.dev').href,
   description: 'Explain your local LLM stack.',
   sameAs: ['https://github.com/inferctl'],
+  // Reference the canonical Ozhiaki Labs org node by exact @id (byte-identical
+  // to the @id it declares on www.ozhiaki.com), not by url/name string match.
+  // This is the strong parent<->child edge spoolctl.dev already uses.
   parentOrganization: {
-    '@type': 'Organization',
-    name: 'Ozhiaki Labs',
-    url: 'https://www.ozhiaki.com/',
+    '@id': 'https://www.ozhiaki.com/#organization',
   },
 };
 ---
