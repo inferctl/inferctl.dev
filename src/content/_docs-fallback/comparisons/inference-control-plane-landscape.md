@@ -6,8 +6,8 @@ order: 10
 ---
 # Inference control-plane landscape
 
-**Research date:** 2026-09-08  
-**inferctl source baseline:** `main`, commit [`86ef4c2`](https://github.com/inferctl/inferctl/tree/86ef4c2f8eb8204bb00fe207a989bb3639952c93)  
+**Research date:** 2026-09-08
+**inferctl source baseline:** `main`, commit [`86ef4c2`](https://github.com/inferctl/inferctl/tree/86ef4c2f8eb8204bb00fe207a989bb3639952c93)
 **External-source review date:** 2026-09-07, unless a row gives another date
 
 ## Conclusion
@@ -42,16 +42,16 @@ request.
 | --- | --- | --- | --- | --- |
 | [OpenClaw Infer](https://docs.openclaw.ai/cli/infer) | Provider inference command | Model selection and request preparation | Sends provider requests; inferctl does not. | [Complete](/docs/comparisons/inferctl-vs-openclaw-infer/) |
 | [InferFlux](https://github.com/anvai-labs/inferflux) | Inference server and gateway | Backend health, model state, and routing | Serves live requests; inferctl can inspect it as a backend. | [Complete](/docs/comparisons/inferctl-vs-inferflux/) |
-| [LocalAI](https://localai.io/docs/features/api-discovery/) | Local runtime with operations features | Discovery, configuration, resource, and worker evidence | Serves requests and can change runtime state; inferctl is read-only across configured backends. | Research in progress |
-| [llama-swap](https://github.com/mostlygeek/llama-swap) | Local lifecycle proxy | Compatible-server health, model routing, and profiles | Proxies requests and manages server lifecycle; inferctl does neither. | Research in progress |
-| [LiteLLM Proxy](https://docs.litellm.ai/) | Multi-provider request gateway | Provider selection, routing, fallback, policy, and visibility | Controls live requests; inferctl makes a route decision before a request. | Research in progress |
-| [llama.cpp server router](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md) | Local server and model router | Model-name routing and load state | Owns a server process and its model subprocesses; inferctl inspects independent backends. | Research in progress |
-| [Otari](https://github.com/mozilla-ai/otari) | Inference gateway with control-plane features | Routing, credentials, budgets, usage, and policy | Includes a gateway request path; inferctl does not carry traffic. | Research in progress |
-| [Bifrost](https://docs.getbifrost.ai/overview) | Multi-provider request gateway | Routing, failover, load balancing, and governance | Provides data-plane gateway control rather than local installed and loaded model evidence. | Research in progress |
-| [NVIDIA Dynamo](https://docs.nvidia.com/dynamo/) | Distributed inference platform | Worker health, routing, canaries, and capacity control | Operates distributed serving; inferctl has local, out-of-band scope. | Research in progress |
-| [llm-d Router and KServe](https://github.com/llm-d/llm-d-router) | Kubernetes routing and serving stack | Model pools, deployment state, and request routing | Operates Kubernetes model servers and request paths; inferctl does not. | Research in progress |
-| [Ray Serve LLM](https://docs.ray.io/en/latest/serve/llm/index.html) | Distributed LLM serving system | Deployment, health, multi-model serving, and routing | Deploys and serves traffic; inferctl does not deploy or serve models. | Research in progress |
-| [SGLang Model Gateway](https://github.com/sgl-project/sglang/blob/main/docs/advanced_features/sgl_model_gateway.md) | Model gateway | Model routing, health checks, retry, and circuit control | Handles request-time faults for SGLang deployments; inferctl checks readiness before submission. | Research in progress |
+| [LocalAI](https://localai.io/docs/features/api-discovery/) | Local runtime with operations features | Discovery, configuration, resource, and worker evidence | Serves requests and can change runtime state; inferctl is read-only across configured backends. | [Complete](/docs/comparisons/inferctl-vs-localai/) |
+| [llama-swap](https://github.com/mostlygeek/llama-swap) | Local lifecycle proxy | Compatible-server health, model routing, and profiles | Proxies requests and manages server lifecycle; inferctl does neither. | [Complete](/docs/comparisons/inferctl-vs-llama-swap/) |
+| [LiteLLM Proxy](https://litellm.ai/) | Multi-provider request gateway | Provider selection, routing, fallback, policy, and visibility | Controls live requests; inferctl makes a route decision before a request. | [Complete](/docs/comparisons/inferctl-vs-litellm-proxy/) |
+| [llama.cpp server router](https://github.com/ggml-org/llama.cpp) | Local server and model router | Model-name routing and load state | Owns a server process and its model subprocesses; inferctl inspects independent backends. | [Complete](/docs/comparisons/inferctl-vs-llamacpp-router/) |
+| [Otari](https://otari.ai/) | Inference gateway with control-plane features | Routing, credentials, budgets, usage, and policy | Includes a gateway request path; inferctl does not carry traffic. | [Complete](/docs/comparisons/inferctl-vs-otari/) |
+| [Bifrost](https://docs.getbifrost.ai/overview) | Multi-provider request gateway | Routing, failover, load balancing, and governance | Provides data-plane gateway control rather than local installed and loaded model evidence. | [Complete](/docs/comparisons/inferctl-vs-bifrost/) |
+| [NVIDIA Dynamo](https://docs.nvidia.com/dynamo/) | Distributed inference platform | Worker health, routing, canaries, and capacity control | Operates distributed serving; inferctl has local, out-of-band scope. | [Complete](/docs/comparisons/inferctl-vs-nvidia-dynamo/) |
+| [llm-d Router and KServe](https://github.com/llm-d/llm-d-router) | Kubernetes routing and serving stack | Model pools, deployment state, and request routing | Operates Kubernetes model servers and request paths; inferctl does not. | [Complete](/docs/comparisons/inferctl-vs-llmd-router-kserve/) |
+| [Ray Serve LLM](https://docs.ray.io/en/latest/serve/llm/index.html) | Distributed LLM serving system | Deployment, health, multi-model serving, and routing | Deploys and serves traffic; inferctl does not deploy or serve models. | [Complete](/docs/comparisons/inferctl-vs-ray-serve-llm/) |
+| [SGLang Model Gateway](https://github.com/sgl-project/sglang) | Model gateway | Model routing, health checks, retry, and circuit control | Handles request-time faults for SGLang deployments; inferctl checks readiness before submission. | [Complete](/docs/comparisons/inferctl-vs-sglang-model-gateway/) |
 | [Ollama API](https://docs.ollama.com/api/ps) | Local inference runtime | Loaded-model list, model metadata, and runtime state | A backend that inferctl can inspect, not a separate control plane. | Integration context |
 | [vLLM](https://docs.vllm.ai/en/latest/serving/online_serving/) | Inference runtime | Health, model inventory, loading, and runtime metrics | A backend and possible integration target, not a direct substitute. | Integration context |
 
@@ -91,10 +91,19 @@ inferctl remains outside that request path.
 - [inferctl compared with OpenClaw Infer](/docs/comparisons/inferctl-vs-openclaw-infer/)
 - [OpenClaw preparation pipeline assessment](/docs/comparisons/openclaw-preparation-pipeline-assessment/)
 - [inferctl compared with InferFlux](/docs/comparisons/inferctl-vs-inferflux/)
+- [inferctl compared with LocalAI](/docs/comparisons/inferctl-vs-localai/)
+- [inferctl compared with llama-swap](/docs/comparisons/inferctl-vs-llama-swap/)
+- [inferctl compared with LiteLLM Proxy](/docs/comparisons/inferctl-vs-litellm-proxy/)
+- [inferctl compared with llama.cpp server router](/docs/comparisons/inferctl-vs-llamacpp-router/)
+- [inferctl compared with Otari](/docs/comparisons/inferctl-vs-otari/)
+- [inferctl compared with Bifrost](/docs/comparisons/inferctl-vs-bifrost/)
+- [inferctl compared with NVIDIA Dynamo](/docs/comparisons/inferctl-vs-nvidia-dynamo/)
+- [inferctl compared with llm-d Router and KServe](/docs/comparisons/inferctl-vs-llmd-router-kserve/)
+- [inferctl compared with Ray Serve LLM](/docs/comparisons/inferctl-vs-ray-serve-llm/)
+- [inferctl compared with SGLang Model Gateway](/docs/comparisons/inferctl-vs-sglang-model-gateway/)
 
-The next planned articles are LocalAI, llama-swap, LiteLLM Proxy, llama.cpp
-server router, and Otari. This page will link to each article when its research
-is complete.
+All candidates in this comparison index have a completed source-based article.
+New candidates will be added only after source review.
 
 ## Sources and update policy
 
