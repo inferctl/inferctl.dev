@@ -1,0 +1,41 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  author: string;
+  tags: string[];
+}
+
+const { title, description, date, author, tags } = Astro.props;
+const dateText = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+---
+<BaseLayout title={`${title} — inferctl`} description={description}>
+  <article class="post">
+    <a class="back" href="/blog/">Blog</a>
+    <h1>{title}</h1>
+    <p class="byline">
+      {dateText} · {author}
+      {tags.map((tag) => <span class="tag">{tag}</span>)}
+    </p>
+    <slot />
+  </article>
+</BaseLayout>
+
+<style>
+  .post { margin: 0 auto; max-width: 46rem; }
+  .back { display: inline-block; margin-bottom: 1rem; }
+  .byline { align-items: center; color: var(--muted); display: flex; flex-wrap: wrap; font-size: .9rem; gap: .5rem; }
+  .tag { border: 1px solid var(--line); border-radius: 999px; font-size: .78rem; padding: .1rem .5rem; }
+  .post :global(h2) { font-size: 1.6rem; margin-top: 2.5rem; }
+  .post :global(h3) { font-size: 1.2rem; margin-top: 1.75rem; }
+  .post :global(code) { background: var(--panel); border-radius: .25rem; padding: .1rem .3rem; }
+  .post :global(pre) { border: 1px solid var(--line); border-radius: .5rem; overflow-x: auto; padding: 1rem; }
+</style>

@@ -1,9 +1,44 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('posts'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) =>
+    b.data.date.valueOf() - a.data.date.valueOf() ||
+    a.data.order - b.data.order,
+  );
 ---
-<BaseLayout title="Blog — inferctl" description="News and notes from inferctl.">
+<BaseLayout title="Blog — inferctl" description="Guides to inferctl control-plane workflows.">
   <section class="page-intro">
     <h1>Blog</h1>
-    <p>No posts yet.</p>
+    <p>Guides to local inference control-plane workflows.</p>
+    {posts.length > 0 && (
+      <ul class="post-list">
+        {posts.map((post) => (
+          <li>
+            <h2><a href={`/blog/${post.id}/`}>{post.data.title}</a></h2>
+            <p>{post.data.description}</p>
+            <p class="post-meta">
+              {post.data.date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                timeZone: 'UTC',
+              })}
+            </p>
+          </li>
+        ))}
+      </ul>
+    )}
   </section>
 </BaseLayout>
+
+<style>
+  .post-list { list-style: none; margin: 2rem 0; padding: 0; }
+  .post-list li { border-top: 1px solid var(--line); padding: 1.5rem 0; }
+  .post-list li:last-child { border-bottom: 1px solid var(--line); }
+  .post-list h2 { font-size: 1.35rem; margin: 0 0 .5rem; }
+  .post-list p { margin: .5rem 0; }
+  .post-meta { color: var(--muted); font-size: .9rem; }
+</style>
