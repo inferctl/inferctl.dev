@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1260" viewBox="0 0 2400 1260" role="img" aria-labelledby="title description">
+  <title id="title">inferctl</title>
+  <desc id="description">Explain your local LLM stack. Local inference control plane. Inspect backends, models, and routes. Your client connects to the backend.</desc>
+  <!-- Link preview template: spoolctl.dev/design/og.svg. Colors: src/styles/global.css. -->
+  <rect width="2400" height="1260" fill="#f5f1ed" />
+  <!-- The existing inferctl symbol from public/favicon.svg. -->
+  <g transform="translate(80 205) scale(12)" fill="#1a4d6d">
+    <path d="M8 8h5v16H8zm11 0h5v16h-5z" />
+  </g>
+  <g font-family="JetBrains Mono, monospace">
+    <text x="400" y="490" font-size="300" font-weight="700" letter-spacing="-6" fill="#18232c">infer<tspan fill="#1a4d6d">ctl</tspan></text>
+    <g font-size="80" fill="#1a4d6d">
+      <text x="180" y="685">Explain your local LLM stack.</text>
+      <text x="180" y="790">Local inference control plane.</text>
+    </g>
+    <g font-size="60" fill="#5d6c78">
+      <text x="180" y="920">Inspect backends, models, and routes.</text>
+      <text x="180" y="1010">Your client connects to the backend.</text>
+    </g>
+    <text x="2220" y="1110" text-anchor="end" font-size="56" fill="#5d6c78">inferctl.dev</text>
+  </g>
+</svg>
